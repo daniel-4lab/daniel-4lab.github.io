@@ -2,75 +2,122 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Countdown Timer</title>
+  <title>Countdown Event</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #1e1e1e;
+      background: #0563c1;
       color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      overflow: hidden;
     }
 
-    .timer {
-      background: #2c2c2c;
-      padding: 30px;
-      border-radius: 10px;
+    .countdown-container {
       text-align: center;
-      width: 320px;
     }
 
-    .time {
+    .event-name {
       font-size: 28px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
     }
 
-    .label {
-      font-size: 14px;
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-weight: bold;
+    }
+
+    .countdown .time-block {
+      background: #0b6dbf;
+      padding: 20px 15px;
+      border-radius: 5px;
+      min-width: 60px;
+    }
+
+    .countdown .time-block span {
+      display: block;
+      font-size: 32px;
+    }
+
+    .countdown .label {
+      font-size: 12px;
       opacity: 0.8;
+    }
+
+    .event-date {
+      margin-top: 15px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 500px) {
+      .countdown .time-block span {
+        font-size: 24px;
+      }
+      .countdown .time-block {
+        padding: 15px 10px;
+        min-width: 50px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="timer">
-    <div class="label">Time Remaining</div>
-    <div class="time" id="display">0 H, 0 M, 0 S</div>
-    <div class="label">until January 24 · 2:00 PM</div>
+  <div class="countdown-container">
+    <div class="event-name">Final Game</div>
+    <div class="countdown">
+      <div class="time-block">
+        <span id="days">0</span>
+        <div class="label">days</div>
+      </div>
+      <div class="time-block">
+        <span id="hours">0</span>
+        <div class="label">hours</div>
+      </div>
+      <div class="time-block">
+        <span id="minutes">0</span>
+        <div class="label">minutes</div>
+      </div>
+      <div class="time-block">
+        <span id="seconds">0</span>
+        <div class="label">seconds</div>
+      </div>
+    </div>
+    <div class="event-date">January 24, 2026 · 2:00 PM</div>
   </div>
 
   <script>
-    // TARGET DATE: January 24 at 14:00 (2 PM)
-    const targetDate = new Date(
-      new Date().getFullYear(), // current year
-      0, // January (0-based)
-      24,
-      14,
-      0,
-      0
-    );
+    // Set the target date (January 24, 2026, 14:00)
+    const targetDate = new Date(2026, 0, 24, 14, 0, 0);
 
     function updateCountdown() {
       const now = new Date();
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        document.getElementById("display").textContent = "0 hours, 0 minutes, 0 seconds";
+        document.getElementById("days").textContent = 0;
+        document.getElementById("hours").textContent = 0;
+        document.getElementById("minutes").textContent = 0;
+        document.getElementById("seconds").textContent = 0;
         clearInterval(interval);
         return;
       }
 
       const totalSeconds = Math.floor(diff / 1000);
-      const hours = Math.floor(totalSeconds / 3600);
+      const days = Math.floor(totalSeconds / (3600 * 24));
+      const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
       const minutes = Math.floor((totalSeconds % 3600) / 60);
       const seconds = totalSeconds % 60;
 
-      document.getElementById("display").textContent =
-        `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
     }
 
     updateCountdown();
