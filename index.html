@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Temporizador</title>
+  <title>Countdown Timer</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,11 +21,11 @@
       padding: 30px;
       border-radius: 10px;
       text-align: center;
-      width: 280px;
+      width: 320px;
     }
 
     .time {
-      font-size: 42px;
+      font-size: 28px;
       margin-bottom: 10px;
     }
 
@@ -38,17 +38,16 @@
 <body>
 
   <div class="timer">
-    <div class="label">Tiempo restante</div>
-    <div class="time" id="display">00:00:00</div>
-    <div class="label">hasta el 24 de enero · 14:00</div>
+    <div class="label">Time Remaining</div>
+    <div class="time" id="display">0 H, 0 M, 0 S</div>
+    <div class="label">until January 24 · 2:00 PM</div>
   </div>
 
   <script>
-    // FECHA OBJETIVO: 24 de enero a las 14:00
-    // NOTA: Meses en JS van de 0 a 11 (enero = 0)
+    // TARGET DATE: January 24 at 14:00 (2 PM)
     const targetDate = new Date(
-      new Date().getFullYear(), // año actual
-      0, // enero
+      new Date().getFullYear(), // current year
+      0, // January (0-based)
       24,
       14,
       0,
@@ -60,7 +59,7 @@
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        document.getElementById("display").textContent = "00:00:00";
+        document.getElementById("display").textContent = "0 hours, 0 minutes, 0 seconds";
         clearInterval(interval);
         return;
       }
@@ -71,9 +70,7 @@
       const seconds = totalSeconds % 60;
 
       document.getElementById("display").textContent =
-        String(hours).padStart(2, "0") + ":" +
-        String(minutes).padStart(2, "0") + ":" +
-        String(seconds).padStart(2, "0");
+        `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
     }
 
     updateCountdown();
