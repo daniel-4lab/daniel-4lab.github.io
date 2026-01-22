@@ -10,39 +10,38 @@
       color: #fff;
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      padding-top: 50px; /* sube el temporizador hacia arriba */
       margin: 0;
-      padding: 20px;
+      min-height: 100vh;
       box-sizing: border-box;
     }
 
     .countdown-container {
       text-align: center;
-      max-width: 600px;
+      max-width: 700px;
       width: 100%;
     }
 
     .event-name {
-      font-size: 2rem;
-      margin-bottom: 20px;
+      font-size: 2.5rem; /* más grande */
+      margin-bottom: 25px;
       font-weight: bold;
     }
 
     .countdown {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 20px;
       justify-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .time-block {
       background: #0b6dbf;
-      padding: 20px 0;
-      border-radius: 8px;
+      padding: 25px 0;
+      border-radius: 10px;
       width: 100%;
-      min-width: 70px;
+      min-width: 90px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -50,32 +49,35 @@
     }
 
     .time-block span {
-      font-size: 2rem;
+      font-size: 3rem; /* números más grandes */
       font-weight: bold;
     }
 
     .label {
-      font-size: 0.85rem;
+      font-size: 1rem;
       opacity: 0.8;
       margin-top: 5px;
       text-transform: lowercase;
     }
 
     .event-date {
-      font-size: 1rem;
+      font-size: 1.3rem; /* fecha más grande */
       opacity: 0.9;
     }
 
-    /* Mobile adjustments */
+    /* Ajustes para móvil */
     @media (max-width: 480px) {
       .time-block span {
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
       .event-name {
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
       .label {
-        font-size: 0.75rem;
+        font-size: 0.85rem;
+      }
+      .event-date {
+        font-size: 1.1rem;
       }
     }
   </style>
@@ -106,7 +108,7 @@
   </div>
 
   <script>
-    // Set target date
+    // Fecha objetivo: 24 de enero 2026, 14:00
     const targetDate = new Date(2026, 0, 24, 14, 0, 0);
 
     function updateCountdown() {
@@ -114,29 +116,4 @@
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        document.getElementById("days").textContent = 0;
-        document.getElementById("hours").textContent = 0;
-        document.getElementById("minutes").textContent = 0;
-        document.getElementById("seconds").textContent = 0;
-        clearInterval(interval);
-        return;
-      }
-
-      const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / (3600 * 24));
-      const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
-    }
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-  </script>
-
-</body>
-</html>
+        do
