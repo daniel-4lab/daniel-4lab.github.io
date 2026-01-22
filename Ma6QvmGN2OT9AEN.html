@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Game</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #DC143C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+  }
+
+  .container {
+    background: #ffe6e6;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 300px;
+  }
+
+  input[type="password"] {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #cc0000;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background: #cc0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background: #ff1a1a;
+  }
+
+  .message {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #800000;
+  }
+
+  .success {
+    color: green;
+  }
+
+  .hash {
+    margin-top: 10px;
+    font-family: monospace;
+    word-break: break-all;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Enter the flag 🚩</h2>
+
+  <input type="password" id="passwordInput" placeholder="Password">
+  <button id="submitBtn">Check</button>
+
+  <div class="message" id="message"></div>
+  <div class="hash" id="hashDisplay"></div>
+
+  <!-- Contenido que aparece SOLO si es correcto -->
+  <div id="extraContent"></div>
+</div>
+
+
+<script>
+async function sha256(str) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+const storedHash = "139a1ce3700e66d6b86a91d224a2f319c551fa0e97d046267959af227a785c8d";
+
+document.getElementById("submitBtn").addEventListener("click", async () => {
+  const password = document.getElementById("passwordInput").value;
+  const messageEl = document.getElementById("message");
+  const hashEl = document.getElementById("hashDisplay");
+  const extraEl = document.getElementById("extraContent");
+
+  if (!password) {
+    messageEl.textContent = "Please enter a password!";
+    messageEl.className = "message";
+    hashEl.textContent = "";
+    extraEl.innerHTML = "";
+    return;
+  }
+
+  const hash = await sha256(password);
+  hashEl.textContent = "SHA-256 Hash: " + hash;
+
+  if (hash === storedHash) {
+    messageEl.textContent = "✅ Correct password! Welcome to the next stage!";
+    messageEl.className = "message success";
+
+    extraEl.innerHTML = `
+      <p style="margin-top:20px; font-size:16px;">
+        💖 Congratulations on unlocking your wedding gift! 💰
+      </p>
+    `;
+  } else {
+    messageEl.textContent = "❌ Incorrect password, try again.";
+    messageEl.className = "message";
+
+    // 🔥 Esto es lo importante
+    extraEl.innerHTML = "";
+  }
+});
+</script>
+
+
+</body>
+</html>
