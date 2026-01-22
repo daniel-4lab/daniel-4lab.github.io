@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #0563c1;
+      background: #1e1e1e;
       color: #fff;
       display: flex;
       justify-content: center;
@@ -37,7 +37,7 @@
     }
 
     .time-block {
-      background: #0b6dbf;
+      background: #DC143C;
       padding: 25px 0;
       border-radius: 10px;
       width: 100%;
@@ -61,7 +61,8 @@
     }
 
     .event-date {
-      font-size: 1.3rem; /* fecha más grande */
+      font-size: 1.9rem; /* fecha más grande */
+      font-weight: bold;
       opacity: 0.9;
     }
 
@@ -85,7 +86,7 @@
 <body>
 
   <div class="countdown-container">
-    <div class="event-name">Event Name</div>
+    <div class="event-name">Give me the money 💵</div>
     <div class="countdown">
       <div class="time-block">
         <span id="days">0</span>
@@ -116,4 +117,29 @@
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        do
+        document.getElementById("days").textContent = 0;
+        document.getElementById("hours").textContent = 0;
+        document.getElementById("minutes").textContent = 0;
+        document.getElementById("seconds").textContent = 0;
+        clearInterval(interval);
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (3600 * 24));
+      const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>
